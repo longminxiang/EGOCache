@@ -47,6 +47,8 @@
 // Opitionally create a different EGOCache instance with it's own cache directory
 - (nonnull instancetype)initWithCacheDirectory:(NSString* __nonnull)cacheDirectory;
 
+- (NSString* __nullable)pathForKey:(NSString* __nonnull)key;
+
 - (void)clearCache;
 - (void)removeCacheForKey:(NSString* __nonnull)key;
 
@@ -79,6 +81,9 @@
 
 - (void)copyFilePath:(NSString* __nonnull)filePath asKey:(NSString* __nonnull)key;
 - (void)copyFilePath:(NSString* __nonnull)filePath asKey:(NSString* __nonnull)key withTimeoutInterval:(NSTimeInterval)timeoutInterval;
+
+- (void)moveFilePath:(NSString* __nonnull)filePath asKey:(NSString* __nonnull)key;
+- (void)moveFilePath:(NSString* __nonnull)filePath asKey:(NSString* __nonnull)key withTimeoutInterval:(NSTimeInterval)timeoutInterval;
 
 - (nullable id<NSCoding>)objectForKey:(NSString* __nonnull)key;
 - (void)setObject:(nonnull id<NSCoding>)anObject forKey:(NSString* __nonnull)key;

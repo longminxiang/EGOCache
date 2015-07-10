@@ -70,6 +70,12 @@ static inline NSString* cachePathForKey(NSString* directory, NSString* key) {
 	return instance;
 }
 
+- (NSString *)pathForKey:(NSString *)key
+{
+    NSString* cachePath = cachePathForKey(_directory, key);
+    return cachePath;
+}
+
 - (instancetype)init {
 	NSString* cachesDirectory = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
 	NSString* oldCachesDirectory = [[[cachesDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]] stringByAppendingPathComponent:@"EGOCache"] copy];
@@ -224,6 +230,21 @@ static inline NSString* cachePathForKey(NSString* directory, NSString* key) {
 	});
 	
 	[self setCacheTimeoutInterval:timeoutInterval forKey:key];
+}
+
+#pragma mark -
+#pragma mark move file methods
+
+- (void)moveFilePath:(NSString*)filePath asKey:(NSString*)key {
+    [self moveFilePath:filePath asKey:key withTimeoutInterval:self.defaultTimeoutInterval];
+}
+
+- (void)moveFilePath:(NSString*)filePath asKey:(NSString*)key withTimeoutInterval:(NSTimeInterval)timeoutInterval {
+    dispatch_async(_diskQueue, ^{
+        [[NSFileManager defaultManager] moveItemAtPath:filePath toPath:cachePathForKey(_directory, key) error:NULL];
+    });
+    
+    [self setCacheTimeoutInterval:timeoutInterval forKey:key];
 }
 
 #pragma mark -

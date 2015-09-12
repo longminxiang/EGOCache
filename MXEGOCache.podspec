@@ -7,6 +7,7 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = "Enormego, Shaun Harrison, Eric Lung"
   s.source       = { :git => "https://github.com/longminxiang/EGOCache.git", :tag => "v" + s.version.to_s }
+  s.platform     = :ios, '7.0'
   s.requires_arc = true
   s.source_files = "*.{h,m}"
 end
